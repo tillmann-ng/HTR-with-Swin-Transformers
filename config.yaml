@@ -1,0 +1,45 @@
+resume:
+save: './temp.pt'
+device: 'cuda:0'
+model_dir: './saved_models/'
+
+# datasets
+data:
+  path: './data/IAM/processed_lines'
+
+# preprocessing
+preproc:
+  image_height: 128
+  image_width: 1024
+
+# architecture
+arch:
+  img_size: [128, 1024]
+  in_chans: 1
+  patch_size: 4
+  embed_dim: 64
+  depths: [2, 2, 4]
+  num_heads: [2, 4, 8]
+  window_size: 7
+  num_mlp: 256
+
+  head_type: 'conformer'
+  head_num_heads: 4
+  head_num_layers: 2
+  head_dropout: 0.1
+
+# training
+train:
+  lr: 0.0003
+  num_epochs: 800
+  batch_size: 16
+  scheduler: 'cosine_warmup'
+  warmup_epochs: 5
+  save_every_k_epochs: 50
+  num_workers: 8
+
+# evaluation
+eval:
+  batch_size: 32
+  num_workers: 8
+  wer_mode: 'tokenizer' # select from 'tokenizer', 'space'
